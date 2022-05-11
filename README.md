@@ -1,24 +1,4 @@
-# currency-converter-vue
-
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+# Technology stack: 
+# Vue 2, vuetify, vuex, routing, vue-chartjs
+#
+## DEMO: https://krelllian.github.io/currency-converter-vue/dist
