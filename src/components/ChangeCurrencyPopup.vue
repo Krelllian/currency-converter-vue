@@ -32,7 +32,7 @@
       </template>
 
       <v-card>
-        <v-card-title class="text-h5 grey lighten-2">
+        <v-card-title class="text-sm-h5 grey lighten-2">
           {{title}} {{currency}} currency
         </v-card-title>
         <div class="d-flex align-center ">

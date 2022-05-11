@@ -17,7 +17,7 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-spacer></v-spacer>
-        <p class="d-flex "><v-icon>mdi-currency-usd</v-icon></p>
+        <p class="d-flex ">{{portfolioCostInUSD}}<v-icon>mdi-currency-usd</v-icon></p>
       </v-app-bar>
 
     <v-navigation-drawer
@@ -67,6 +67,7 @@ import { mapGetters } from 'vuex';
       },
     },
     computed: {
+    ...mapGetters(['portfolioCostInUSD'])
   }
   });
 </script>

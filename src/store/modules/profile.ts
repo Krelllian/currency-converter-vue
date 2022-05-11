@@ -53,10 +53,25 @@ export const profile: any = {
                     }
                 }
             });
-        }
+        },
+        changeHistoricalData(state: any, data: []) {
+            state.historicalData = data
+        },
     },
     actions: {
+        async setHistoricalData(state: any, payload: any) {
+            console.log('payload', payload)
+            try {
+                const historical = await axios.get(`https://api.coingecko.com/api/v3/coins/${payload.coinId1}/market_chart?vs_currency=${payload.coinId2}&days=${payload.days}`)
+                console.log("historical", historical.data.market_caps)
+                state.commit('changeHistoricalData', historical.data.prices)
+                console.log(state.historicalData)
 
+            } catch (err) {
+                console.log(err)
+            }
+
+        }
     },
     modules: {
 
