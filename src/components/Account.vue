@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 import ChangeCurrencyPopup from './ChangeCurrencyPopup.vue';
 import DoughnutChart from './charts/DoughnutChart.vue';
 export default Vue.extend({
@@ -49,9 +49,9 @@ export default Vue.extend({
   data: () => ({
   }),
   methods: {
-    debug() {
-      console.log("this.chartData", this)
-    }
+  },
+  mounted() {
+    this.$store.dispatch('setAccountBalance')
   },
 });
 </script>

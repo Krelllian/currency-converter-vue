@@ -32,7 +32,7 @@
       </template>
 
       <v-card>
-        <v-card-title class="text-sm-h5 grey lighten-2">
+        <v-card-title class="text-sm-h5 grey lighten-2 popup__title">
           {{title}} {{currency}} currency
         </v-card-title>
         <div class="d-flex align-center ">
@@ -47,7 +47,7 @@
           ></v-text-field>
         <v-btn
         color="green darken-1 mr-3"
-        v-on:click="reduceAmount"
+        v-on:click="reduceAmount() + setAccountBalance()"
         >Confirm</v-btn>
         </div>
         <v-divider></v-divider>
@@ -67,7 +67,15 @@
   </div>
 </template>
 
+<style scoped lang="scss">
+    .popup__title {
+        white-space: nowrap
+    }
+</style>
+
 <script>
+  import { mapActions } from 'vuex'
+
   export default {
       name: 'ChangeCurrencyPopup',
       props: ['test', 'title', 'currency', 'type'],
@@ -77,9 +85,11 @@
         dialog: false,
       };
     },
+    computed: {
+      ...mapActions(['setAccountBalance',]),
+    },
     methods: {
     reduceAmount(store) {
-      console.log(this.title)
       this.$store.commit('changeCurrencyAmount', {
       coinName: this.currency,
       number: Number(this.fieldNumber),

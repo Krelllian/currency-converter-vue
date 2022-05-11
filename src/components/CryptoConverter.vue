@@ -40,6 +40,7 @@ import Vue from 'vue';
 import axios from 'axios';
 import Chart  from '../components/charts/Chart.vue';
 import { mapActions, mapState } from 'vuex';
+
 export default Vue.extend({
   name: 'CryptoConvecter',
   components: {
@@ -65,24 +66,22 @@ export default Vue.extend({
             Accept: 'application/json',
           }
         }
-      console.log(this.currency1, this.currency2)
         if (this.currency1 === this.currency2) {
           this.apiError = false
           this.exchangeRate = this.currencyAmount
         } else {
-          console.log('api call')
           try {
             this.apiError = false
             const exchangeRate = await axios.get(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${this.currency2.toLowerCase()}&ids=${this.currency1.toLowerCase()}&order=market_cap_desc&per_page=100&page=1&sparkline=false`, config);
-            console.log(exchangeRate)
             this.exchangeRate = exchangeRate.data[0].current_price * this.currencyAmount
-            console.log(exchangeRate)
           } catch (err) {
-            console.log('err')
             this.apiError = true
           }
         }
     },
+  },
+    mounted() {
+    this.$store.dispatch('setAccountBalance')
   },
 });
 </script>

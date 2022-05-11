@@ -4,6 +4,7 @@ import axios from 'axios'
 interface ICoin {
     name: string;
     amount: number;
+    costInUSD: number;
 }
 
 interface IProfileState {
@@ -14,11 +15,11 @@ interface IProfileState {
 
 export const profile: any = {
     state: {
-        portfolioCostInUSD: 900,
+        portfolioCostInUSD: 0,
         currencies: [
-            { name: 'USD', amount: 1000 },
-            { name: 'Bitcoin', amount: 900 },
-            { name: 'Ether', amount: 800 },
+            { name: 'USD', amount: 1000, costInUSD: 1 },
+            { name: 'Bitcoin', amount: 900, costInUSD: 29500 },
+            { name: 'Ether', amount: 800, costInUSD: 2.175 },
         ],
         historicalData: [],
     },
@@ -40,13 +41,9 @@ export const profile: any = {
                     switch (payload.type) {
                         case 'decrease':
                             coin.amount -= payload.number;
-                            console.log(payload.coinName, payload.number)
-                            console.log(coin.amount);
                             break
                         case 'increase':
                             coin.amount += payload.number;
-                            console.log(payload.coinName, payload.number)
-                            console.log(coin.amount);
                             break
                         default:
                             break
@@ -57,20 +54,21 @@ export const profile: any = {
         changeHistoricalData(state: any, data: []) {
             state.historicalData = data
         },
+        changePortfolioCostInUSD(state: any) {
+            state.portfolioCostInUSD = state.currencies.reduce(((acc: number, coin: ICoin) => acc + coin.amount * coin.costInUSD), 0)
+        }
     },
     actions: {
         async setHistoricalData(state: any, payload: any) {
-            console.log('payload', payload)
             try {
                 const historical = await axios.get(`https://api.coingecko.com/api/v3/coins/${payload.coinId1}/market_chart?vs_currency=${payload.coinId2}&days=${payload.days}`)
-                console.log("historical", historical.data.market_caps)
                 state.commit('changeHistoricalData', historical.data.prices)
-                console.log(state.historicalData)
-
             } catch (err) {
                 console.log(err)
             }
-
+        },
+        async setAccountBalance(state: any,) {
+            state.commit('changePortfolioCostInUSD')
         }
     },
     modules: {
